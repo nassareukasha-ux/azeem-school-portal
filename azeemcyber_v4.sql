@@ -1,0 +1,31 @@
+CREATE DATABASE IF NOT EXISTS azeemcyber_v2;
+USE azeemcyber_v2;
+
+CREATE TABLE IF NOT EXISTS students (
+ id INT AUTO_INCREMENT PRIMARY KEY,
+ fullname VARCHAR(100),
+ email VARCHAR(100) UNIQUE,
+ password VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS applications (
+ id INT AUTO_INCREMENT PRIMARY KEY,
+ student_id INT,
+ course VARCHAR(100),
+ fee DECIMAL(10,2) DEFAULT 0,
+ status VARCHAR(20) DEFAULT 'Pending',
+ paid TINYINT(1) DEFAULT 0,
+ amount_paid DECIMAL(10,2) DEFAULT 0,
+ payment_reference VARCHAR(100),
+ paid_at DATETIME NULL,
+ applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+ FOREIGN KEY(student_id) REFERENCES students(id)
+);
+
+CREATE TABLE IF NOT EXISTS admins (
+ id INT AUTO_INCREMENT PRIMARY KEY,
+ username VARCHAR(50) UNIQUE,
+ password VARCHAR(255)
+);
+
+INSERT INTO admins(username,password) VALUES('admin','$2y$10$5b4R0MZ8YtX9nn2ZwHozm.jXH84A7ZBiR9mxWapOykE90ZPpl.vFi') ON DUPLICATE KEY UPDATE username=username;
